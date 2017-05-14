@@ -2,12 +2,51 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Paper, { PaperTitle, PaperParagraph } from './Components/Paper';
 
+const paperPositions = [
+  { xMultiplier: 0.3,
+    yMultiplier: 0.9,
+    rotation: 24,
+    readRotation: -2,
+    animationLength: 0.6,
+    transitionDelay: 0.2,
+  },
+  { xMultiplier: -0.3,
+    yMultiplier: 0.74,
+    rotation: -20,
+    readRotation: 2,
+    animationLength: 0.4,
+    transitionDelay: 0,
+  },
+  { xMultiplier: 0,
+    yMultiplier: 0.84,
+    rotation: -42,
+    readRotation: -1,
+    animationLength: 0.3,
+    transitionDelay: 0.1,
+  },
+  { xMultiplier: 0.7,
+    yMultiplier: 0.2,
+    rotation: -40,
+    readRotation: 3,
+    animationLength: 0.2,
+    transitionDelay: 0.4,
+  },
+  { xMultiplier: -0.73,
+    yMultiplier: 0.2,
+    rotation: 46,
+    readRotation: 1,
+    animationLength: 0.3,
+    transitionDelay: 0.8,
+  },
+]
+
 const AppWrapper = styled.div`
   flex: 1;
   background-color: #f2f2f2;
   margin: 0px;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 `
 
 class App extends Component {
@@ -15,7 +54,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      isReaded: false,
+      focusIndex: 0,
       height: 200,
       width: 200,
     }
@@ -23,7 +62,6 @@ class App extends Component {
   }
 
   updateDimensions() {
-    console.log('update dimensions. container:', this.container.clientHeight)
     this.setState({
       width: this.container.clientWidth,
       height: this.container.clientHeight
@@ -34,7 +72,7 @@ class App extends Component {
     window.addEventListener("resize", () => this.updateDimensions());
     setTimeout(() => {
       this.updateDimensions();
-    }, 1500)
+    }, 200)
 
   }
 
@@ -46,78 +84,36 @@ class App extends Component {
             this.container = ref;
           }
         }}>
-        <Paper
-          height={this.state.height - 100}
-          scatterX={-this.state.width / 2}
-          scatterY={this.state.height / 2}
-          scatterRotation={24}
-          isReaded={this.state.isReaded}
-          onClick={() => this.setState({isReaded: !this.state.isReaded})}
-        >
-          <PaperTitle
-            fontFamily="Reenie Beanie"
-          >
-          CV of Lauri Nevanperä
-          </PaperTitle>
-          <PaperParagraph>
-            Hi! Im Lauri Nevanperä! <br />
-            You might find some interesting information from these papers.
-          </PaperParagraph>
-        </Paper>
-        <Paper
-          height={this.state.height - 100}
-          scatterX={this.state.width * 0.4}
-          scatterY={this.state.height * 0.8}
-          scatterRotation={-30}
-          isReaded={this.state.isReaded}
-          onClick={() => this.setState({isReaded: !this.state.isReaded})}
-        >
-          <PaperTitle
-            fontFamily="Reenie Beanie"
-          >
-          CV of Lauri Nevanperä
-          </PaperTitle>
-          <PaperParagraph>
-            Hi! Im Lauri Nevanperä! <br />
-            You might find some interesting information from these papers.
-          </PaperParagraph>
-        </Paper>
-        <Paper
-          height={this.state.height - 100}
-          scatterX={-this.state.width * 0.4}
-          scatterY={-this.state.height * 0.7}
-          scatterRotation={-40}
-          isReaded={this.state.isReaded}
-          onClick={() => this.setState({isReaded: !this.state.isReaded})}
-        >
-          <PaperTitle
-            fontFamily="Reenie Beanie"
-          >
-          CV of Lauri Nevanperä
-          </PaperTitle>
-          <PaperParagraph>
-            Hi! Im Lauri Nevanperä! <br />
-            You might find some interesting information from these papers.
-          </PaperParagraph>
-        </Paper>
-        <Paper
-          height={this.state.height - 100}
-          scatterX={this.state.width * 0.4}
-          scatterY={-this.state.height * 0.3}
-          scatterRotation={60}
-          isReaded={this.state.isReaded}
-          onClick={() => this.setState({isReaded: !this.state.isReaded})}
-        >
-          <PaperTitle
-            fontFamily="Reenie Beanie"
-          >
-          CV of Lauri Nevanperä
-          </PaperTitle>
-          <PaperParagraph>
-            Hi! Im Lauri Nevanperä! <br />
-            You might find some interesting information from these papers.
-          </PaperParagraph>
-        </Paper>
+        {
+          paperPositions.map((pos, index) =>
+            <Paper
+              height={this.state.height * 0.7}
+              scatterX={this.state.width * pos.xMultiplier}
+              scatterY={this.state.height * pos.yMultiplier}
+              scatterRotation={pos.rotation}
+              readRotation={pos.readRotation}
+              animationLength={pos.animationLength}
+              transitionDelay={pos.transitionDelay}
+              isReaded={this.state.focusIndex === index}
+              onClick={() => this.setState({focusIndex: index})}
+            >
+              <PaperTitle
+                fontFamily="Reenie Beanie"
+              >
+              CV of Lauri Nevanperä
+              </PaperTitle>
+              <PaperParagraph>
+                Hi! Im Lauri. <br />
+                You might find some interesting information from these papers.
+                öääööäöääöfdsafsa juuuuuuh
+                fdsafsd fdsafd  fdas fdsa f dfsaf dasfda
+              </PaperParagraph>
+            </Paper>
+          )
+        }
+
+
+
       </AppWrapper>
     );
   }

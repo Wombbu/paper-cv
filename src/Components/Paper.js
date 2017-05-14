@@ -5,8 +5,8 @@ const getTranslateString = ({scatterX, scatterY, isReaded}) => {
   return isReaded ? 'translate(0, 0)' : `translate(${scatterX}px, ${scatterY}px)`
 }
 
-const getRotateString = ({scatterRotation, isReaded}) => {
-  return isReaded ? 'rotate(2deg)' : `rotate(${scatterRotation}deg)`
+const getRotateString = ({scatterRotation, readRotation, isReaded}) => {
+  return isReaded ? `rotate(${readRotation}deg)` : `rotate(${scatterRotation}deg)`
 }
 
 export const PaperTitle = styled.h1`
@@ -25,17 +25,18 @@ const PaperWrapper = styled.div`
   min-height: ${props => props.height}px;
   max-width: ${props => props.height * (210 / 297)}px;
   max-height: ${props => props.height}px;
-
+  margin-top: 10px;
   transform:
     ${props => getTranslateString(props)}
     ${props => getRotateString(props)}
     translateZ(0);
     ;
   background-color: #fff;
-  {/*box-shadow: 0px 0px 1px #555;*/}
+  box-shadow: 0px 0.03px 1px rgba(0,0,0,0.03);
   padding: 20px;
 
-  transition: transform 1s ease-out;
+  transition: transform ${props => props.animationLength}s ease-out;
+  transition-delay: ${props => props.transitionDelay}
   position: absolute;
 `;
 
