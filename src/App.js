@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Paper, { PaperTitle, PaperParagraph } from './Components/Paper';
+import InfoPaper from './Components/Paper';
 
 const paperPositions = [
   { xMultiplier: 0.3,
@@ -47,6 +48,7 @@ const AppWrapper = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
+  position: relative;
 `
 
 class App extends Component {
